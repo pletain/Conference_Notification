@@ -1,0 +1,264 @@
+*,
+*::before,/*가상요소들도 박스사이징을 보더사이즈로*/
+*::after {
+  box-sizing: border-box;
+}
+html {
+  font-size: 10px;
+}
+body {
+  font-size: 2rem;
+  line-height: 1.6;
+  font-family: "Open Sans", arial, "Apple SD Gothic Neo", "Noto Sans CJK KR",
+    본고딕, KoPubDotum, 나눔바른고딕, 나눔고딕, NanumGothic, 맑은고딕,
+    "Malgun Gothic", sans-serif;
+}
+a {
+  text-decoration: none;
+}
+
+/* HEADER */
+/*
+h2::before{
+	content: "이모티콘";
+}   
+*/
+
+.header {
+  background: #CC0000;
+  height: 110px;
+  padding: 6px 0 4px;
+}
+.container {
+  max-width: 1810px;
+  background: #CC0000;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+}
+
+.container-float {
+    max-width: 1810px;
+    background: white;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    border-left: 1px solid #a0a0a0;
+    border-right: 1px solid #a0a0a0;
+  }
+  
+
+.container-day {
+    max-width: 1810px;
+    background: white;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    border-left: 1px solid #a0a0a0;
+    border-right: 1px solid #a0a0a0;
+    height: 400px;
+    text-align: center;
+}
+.container-float::after {
+    display: block;
+    content: "";
+    clear: both;
+}
+  
+
+.container-float1 {
+    max-width: 1810px;
+    background: white;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    border-left: 1px solid #a0a0a0;
+    border-right: 1px solid #a0a0a0;
+    height: 400px;
+  }
+
+
+.init {
+  position: absolute;
+  top: 10px;
+  left: 30px;
+}
+
+
+
+.container-float2 {
+  max-width: 1810px;
+  background: white;
+  padding: 0 20px;
+  position: relative;
+  border-left: 1px solid #a0a0a0;
+  border-right: 1px solid #a0a0a0;
+  height: 600px;
+  margin: 0 auto;
+}
+
+
+.container-float3 {
+  max-width: 1810px;
+  background: #a0a0a0;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+}
+
+.container-float3::after {
+  display: block;
+  content: "";
+  clear: both;
+}
+
+.inline-element {
+  width: 300px;
+}
+.logo {
+  font-weight: 1000;
+  font-size: 5rem;
+  font-weight: 500;
+  color: 000000;
+  margin: 0;
+  /* padding-left: inherit; */
+  position: absolute;
+  top: 0;
+  left: 40%;
+  text-align: center;
+}
+.logo1 {
+  display: block;
+  margin: 0px auto;
+  width: auto;
+  height: auto;
+  min-width: 680px;
+  min-height: 200px;
+}
+
+.logo2 {
+  display: block;
+  margin: 0px auto;
+  width: auto;
+  height: auto;
+  max-width: 2000px;
+  max-height: 2000px;
+  border-left: 2px solid #ff9e19;
+  border-right: 2px solid #ff9e19;
+  border-top: 2px solid #ff9e19;
+  border-bottom: 2px solid #ff9e19;
+}
+.nav {
+  text-align: right;
+}
+.list {
+  margin: 0;
+  font-size: 0;
+}
+.list-item {
+  font-weight: 700;
+  display: inline-block;
+  font-size: 2rem;
+}
+.list-item > a {
+  color: white;
+  display: block;
+  padding: 10px;
+}
+.list-item > a:hover {
+  color: #37a59a;
+}
+/* MAIN */
+.main {
+  padding: 0 20px;
+  background: #efefef;
+}
+
+.hero-section {
+  background: #efefef;
+  font-size: 5rem;
+  font-weight: 400;
+  margin: 0;
+}
+
+.profile {
+  font-size: 3.6rem;
+  font-weight: 600;
+  text-align: center;
+  color: white;
+  background: #ff9e19;
+  margin: 0 404px;
+}
+
+.center {
+  display: table;
+}
+.center div {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.root {
+  margin: auto;
+  width: 961px;
+}
+
+.name {
+  background: #ff9e19;
+  float: left;
+  width: 30%;
+  font-weight: 400;
+  text-align: center;
+  color: white;
+  height: 50px;
+  border-left: 2px solid #ff9e19;
+  border-right: 2px solid #ff9e19;
+  border-top: 0.5px solid white;
+  border-bottom: 0.5px solid white;
+}
+.name1 {
+  background: white;
+  float: left;
+  width: 70%;
+  text-align: center;
+  color: black;
+  height: 50px;
+  border-left: 2px solid #ff9e19;
+  border-right: 2px solid #ff9e19;
+  border-top: 0.5px solid #a0a0a0;
+  border-bottom: 0.5px solid #a0a0a0;
+}
+
+.Education {
+  background: #ff9e19;
+  float: left;
+  width: 30%;
+  font-weight: 400;
+  text-align: center;
+  color: white;
+  height: 140px;
+  padding: 300, auto;
+  border-left: 2px solid #ff9e19;
+  border-right: 2px solid #ff9e19;
+  border-top: 0.5px solid white;
+  border-bottom: 0.5px solid white;
+}
+
+.Education1 {
+  background: white;
+  float: left;
+  width: 70%;
+  text-align: center;
+  color: black;
+  height: 140px;
+  border-left: 2px solid #ff9e19;
+  border-right: 2px solid #ff9e19;
+  border-top: 0.5px solid #a0a0a0;
+  border-bottom: 0.5px solid #a0a0a0;
+}
+
+
+.column_7{
+	float: left;
+    width: 14%;
+}
