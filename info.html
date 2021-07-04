@@ -1,0 +1,54 @@
+<html>
+
+<head>
+    <title>Film info</title>
+
+    <script>
+        var titles = [];
+        var names = [];
+        var tickets = [];
+        var titleInput = document.getElementById("title");
+        var nameInput = document.getElementById("name");
+        var ticketInput = document.getElementById("tickets");
+        var messageBox = document.getElementById("display");
+        function insert() {
+            titles.push(titleInput.value);
+            names.push(nameInput.value);
+            tickets.push(ticketInput.value);
+            document.getElementById("result").innerHTML.value    = titles[0];
+            clearAndShow();
+        }
+
+        function clearAndShow() {
+            messageBox.innerHTML += "Titles: " + titles.join(", ") + "<br/>";
+            messageBox.innerHTML += "Names: " + names.join(", ") + "<br/>";
+            messageBox.innerHTML += "Tickets: " + tickets.join(", ");
+            titleInput.value = "";
+            nameInput.value = "";
+            ticketInput.value = "";
+
+            messageBox.innerHTML = "";
+
+           
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <form>
+        <h1>Please enter data</h1>
+        <input id="title" type="text" />
+        <input id="name" type="text" />
+        <input id="tickets" type="text" />
+        <input type="button" value="Save" onclick="insert()" />
+        <input type="button" value="Show data" onclick="show()" />
+        <div id="result">
+            result = 
+        </div>
+    </form>
+    <div id="display"></div>
+</body>
+
+</html>

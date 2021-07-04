@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>연관 배열</title>
+    <script>
+      //폼 요소의 이름과 값 구하기
+      function getVals(){
+        var elems = document.getElementById("picker").elements;
+        var elemArray = new Object();
+        for(var i=0;i<elems.length;i++){
+          if(elems[i].type == "text")
+            elemArray[elems[i].id] = elems[i].value;
+        }
+        checkVals(elemArray);
+        return false;
+      }
+
+      //값 확인
+      function checkVals(elemArray){
+        var str = "";
+        for(var key in elemArray){
+          str+=key+","+elemArray[key]+" ";  
+        }
+        document.getElementById("result").innerHTML = str;
+      }
+    </script>
+  </head>
+
+  <body>
+    <form id="picker" onsubmit="return getVals()">
+      <label>회의제목:</label> <input type="text" id="title" /><br />
+      <label>시간:</label> <input type="text" id="when" /><br />
+      <label>장소:</label> <input type="text" id="where" /><br />
+      <label>문서:</label> <input type="text" id="document" /><br />
+      <label>주관:</label> <input type="text" id="subjectivity" /><br />
+      <label>참석:</label>:</label> <input type="text" id="attend" /><br />
+      <label>요청:</label> <input type="text" id="request" /><br />
+      <label>접수자:</label> <input type="text" id="receipt" /><br />
+      <label>기타특이사항:</label> <input type="text" id="ect" /><br />
+      <input type="submit" value="유효성 검사" />
+    </form>
+    <div id="result"></div>
+  </body>
+</html>
