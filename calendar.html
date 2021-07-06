@@ -143,17 +143,13 @@
 
         var cur_day
         var cur_id
-
+        var cur_date
+        var conference_index = new Array();
+        var ID_flag = new Array(); //해당 연월에 컨텐츠가 생성됐는지 확인
         var elemArray = new Array(); //  배열 생성
-        function mklist_month(year, month) { // 생성된 년월에 동적으로 생성.
-            var date = year * 100 + month;
-            elemArray[date] = new Array(); // 년월 배열 생성
-            for (var i = 1; i < 32; i++) {
-                elemArray[date][i] = new Object(); // 일 객체 생성
-            }
-        }
-    
-        function ym_Sync(year, month){
+
+
+        function ym_Sync(year, month) {
             cur_id = year * 100 + month;
         }
 
@@ -162,26 +158,74 @@
             var month = cur_id % 100;
             document.getElementById("ts1").innerHTML = year + "년" + month + "월" + day + "일 회의록";
             cur_day = day;
-            checkVals(elemArray[cur_id][day]);
+            cur_date = cur_id * 100 + cur_day;
+            checkVals();
         }
 
-        function getVals() {
-            var elems = document.getElementById("picker").elements;
-            for (var i = 0; i < elems.length; i++) {
-                if (elems[i].type == "text")
-                    elemArray[cur_id][cur_day][elems[i].id] = elems[i].value;
+
+        function flag_checker(year, month) {
+            if (ID_flag[cur_id] != 1) {
+                ID_flag[cur_id] = 1;
+                build_Month(year, month);
             }
-            checkVals(elemArray);
+        }
+
+        function build_Month(year, month) { // 생성된 년월에 동적으로 생성. 한번만 실행됨.
+            ym_Sync(year, month);
+            elemArray[cur_id] = new Array(); // 년월 배열 생성
+            for (var day = 1; day < 32; day++) {
+                elemArray[cur_id][day] = new Object(); // 일 인덱스 배열 생성
+                conference_index[cur_date] = 0;
+            }
+        }
+
+        // function is_text(Id){
+        //     if(Id.type == "text")
+        //         return true;
+        // }
+
+        function getVals() {
+            // conference_index[cur_date] += 1;
+            // if(title.typ)
+            // elemArray[cur_id][cur_day][conference_index[cur_date]] = {
+            //     title: title.value,
+            //     when: when.value,
+            //     where: where.value,
+            //     document: document.value,
+            //     subjectivity: subjectivity.value,
+            //     attend: attend.value,
+            //     request: request.value,
+            //     receipt: receipt.value,
+            //     etc: etc.value
+            // };
+
+            var elems = document.getElementById("picker").elements;
+            alert(elems.length);
+            for (var i = 0; i < elems.length; i++) {
+                if (elems[i].length != 0) {
+                    alert("찾앗다!");
+                    conference_index[cur_date] += 1;
+                    elemArray[cur_id][cur_day][conference_index[cur_date]] = new Object();
+                    elemArray[cur_id][cur_day][conference_index[cur_date]][elems[i].id] = elems[i].value;
+                }
+                alert("끝낫다");
+            }
+            checkVals();
             return false;
         }
 
         //값 확인
-        function checkVals(Array_) {
+        function checkVals() {
             var str = "";
-            for (var key in Array_[cur_id][cur_day]) {
-                str += key + ":" + Array_[cur_id][cur_day][key] + " ";
+            for (var i = 1; i < conference_index[cur_date]; i++) {
+                for (var key in elemArray[cur_id][cur_day][i]) {
+                    alert(elemArray[cur_id][cur_day][i][key]);
+                    str += key + ":" + elemArray[cur_id][cur_day][i][key] + " ";
+                }
+
             }
             document.getElementById("result").innerHTML = str;
+
         }
 
         // ------------------------------------------------------------
@@ -204,9 +248,7 @@
             //innerHTML : js 언어를 HTML의 권장 표준 언어로 바꾼다
             //new를 찍지 않아서 month는 +1을 더해줘야 한다. 
             tbCalendarYM.innerHTML = today.getFullYear() + "년 " + (today.getMonth() + 1) + "월";
-            mklist_month(today.getFullYear(), today.getMonth() + 1);
-            ym_Sync(today.getFullYear(), today.getMonth() + 1);
-
+            flag_checker(today.getFullYear(), today.getMonth() + 1);
             /*while은 이번달이 끝나면 다음달로 넘겨주는 역할*/
             while (tbCalendar.rows.length > 2) {
                 //열을 지워줌
@@ -302,18 +344,19 @@
         buildCalendar();//
     </script>
     <div class="content-section">
+        <div id="half"><input class="coll" , id="btc" type="number" value="12"></div>
         <font color="#000000">
             <p id="ts1" value=""></p>
             <form id="picker" onsubmit="return getVals()">
-                <label>회의제목:</label> <input type="text" id="title" /><br />
-                <label>시간:</label> <input type="text" id="when" /><br />
-                <label>장소:</label> <input type="text" id="where" /><br />
-                <label>문서:</label> <input type="text" id="document" /><br />
-                <label>주관:</label> <input type="text" id="subjectivity" /><br />
-                <label>참석:</label></label> <input type="text" id="attend" /><br />
-                <label>요청:</label> <input type="text" id="request" /><br />
-                <label>접수자:</label> <input type="text" id="receipt" /><br />
-                <label>기타 특이사항:</label> <input type="text" id="ect" /><br />
+                <label>회의제목:</label> <input type="text" id="title" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>시간:</label> <input type="text" id="when" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>장소:</label> <input type="text" id="where" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>문서:</label> <input type="text" id="document" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>주관:</label> <input type="text" id="subjectivity" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>참석:</label> <input type="text" id="attend" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>요청:</label> <input type="text" id="request" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>접수자:</label> <input type="text" id="receipt" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>기타 특이사항:</label> <input type="text" id="ect" placeholder="회의 제목을 입력해주세요." value="" /><br />
                 <input type="submit" value="작성하기" />
             </form>
             <div id="result">결과</div>
