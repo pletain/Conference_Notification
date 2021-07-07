@@ -10,7 +10,8 @@
             text-align: center;
             font-size: 20px;
             font-family: 굴림;
-            border: 2px border-color:#3333FF;
+            border: 2px;
+            border-color: #3333FF;
             border-radius: 8px;
             /*모서리 둥글게*/
         }
@@ -25,9 +26,8 @@
             font-size: 5rem;
             font-weight: 400;
             max-width: 2080px;
-            margin: 0 28%;
             height: 2000px;
-            /* padding: 2em; */
+            margin: 0 auto;
         }
 
         .container {
@@ -97,6 +97,18 @@
     </style>
 
     <script type="text/javascript">
+
+        function leadingSpaces(n, digits) { //자릿 수 맞추기
+            var space = '';
+            n = n.toString();
+
+            if (n.length < digits) {
+                for (var i = 0; i < digits - n.length; i++)
+                    space += '&nbsp;';
+            }
+            return space + n + space;
+        }
+
         var today = new Date();//오늘 날짜//내 컴퓨터 로컬을 기준으로 today에 Date 객체를 넣어줌
         var date = new Date();//today의 Date를 세어주는 역할
         function prevCalendar() {//이전 달
@@ -116,120 +128,6 @@
 
         }
 
-        function leadingSpaces(n, digits) { //자릿 수 맞추기
-            var space = '';
-            n = n.toString();
-
-            if (n.length < digits) {
-                for (var i = 0; i < digits - n.length; i++)
-                    space += '&nbsp;';
-            }
-            return space + n + space;
-        }
-
-        // var flag = 1;
-        // function div_show(day) { // 컨텐츠 숨기기
-        //     document.getElementById("ts1").innerHTML = day;
-        //     // if (flag) {
-        //     //     document.getElementById("hidden").style.display = "block";
-        //     //     flag = 0;
-        //     // }
-        //     // else {
-        //     //     document.getElementById("hidden").style.display = "none";
-        //     //     flag = 1;
-        //     // }
-
-        // }
-
-        var cur_day
-        var cur_id
-        var cur_date
-        var conference_index = new Array();
-        var ID_flag = new Array(); //해당 연월에 컨텐츠가 생성됐는지 확인
-        var elemArray = new Array(); //  배열 생성
-
-
-        function ym_Sync(year, month) {
-            cur_id = year * 100 + month;
-        }
-
-        function day_Sync(day) {
-            var year = parseInt(cur_id / 100);
-            var month = cur_id % 100;
-            document.getElementById("ts1").innerHTML = year + "년" + month + "월" + day + "일 회의록";
-            cur_day = day;
-            cur_date = cur_id * 100 + cur_day;
-            checkVals();
-        }
-
-
-        function flag_checker(year, month) {
-            if (ID_flag[cur_id] != 1) {
-                ID_flag[cur_id] = 1;
-                build_Month(year, month);
-            }
-        }
-
-        function build_Month(year, month) { // 생성된 년월에 동적으로 생성. 한번만 실행됨.
-            ym_Sync(year, month);
-            elemArray[cur_id] = new Array(); // 년월 배열 생성
-            for (var day = 1; day < 32; day++) {
-                elemArray[cur_id][day] = new Object(); // 일 인덱스 배열 생성
-                conference_index[cur_date] = 0;
-            }
-        }
-
-        // function is_text(Id){
-        //     if(Id.type == "text")
-        //         return true;
-        // }
-
-        function getVals() {
-            // conference_index[cur_date] += 1;
-            // if(title.typ)
-            // elemArray[cur_id][cur_day][conference_index[cur_date]] = {
-            //     title: title.value,
-            //     when: when.value,
-            //     where: where.value,
-            //     document: document.value,
-            //     subjectivity: subjectivity.value,
-            //     attend: attend.value,
-            //     request: request.value,
-            //     receipt: receipt.value,
-            //     etc: etc.value
-            // };
-
-            var elems = document.getElementById("picker").elements;
-            alert(elems.length);
-            for (var i = 0; i < elems.length; i++) {
-                if (elems[i].length != 0) {
-                    alert("찾앗다!");
-                    conference_index[cur_date] += 1;
-                    elemArray[cur_id][cur_day][conference_index[cur_date]] = new Object();
-                    elemArray[cur_id][cur_day][conference_index[cur_date]][elems[i].id] = elems[i].value;
-                }
-                alert("끝낫다");
-            }
-            checkVals();
-            return false;
-        }
-
-        //값 확인
-        function checkVals() {
-            var str = "";
-            for (var i = 1; i < conference_index[cur_date]; i++) {
-                for (var key in elemArray[cur_id][cur_day][i]) {
-                    alert(elemArray[cur_id][cur_day][i][key]);
-                    str += key + ":" + elemArray[cur_id][cur_day][i][key] + " ";
-                }
-
-            }
-            document.getElementById("result").innerHTML = str;
-
-        }
-
-        // ------------------------------------------------------------
-
         function buildCalendar() {//현재 달 달력 만들기
             var doMonth = new Date(today.getFullYear(), today.getMonth(), 1);
             //이번 달의 첫째 날,
@@ -248,7 +146,11 @@
             //innerHTML : js 언어를 HTML의 권장 표준 언어로 바꾼다
             //new를 찍지 않아서 month는 +1을 더해줘야 한다. 
             tbCalendarYM.innerHTML = today.getFullYear() + "년 " + (today.getMonth() + 1) + "월";
-            flag_checker(today.getFullYear(), today.getMonth() + 1);
+            // -----------------------------------
+            ym_sync(today.getFullYear(), (today.getMonth() + 1));
+
+
+            // -----------------------------------
             /*while은 이번달이 끝나면 다음달로 넘겨주는 역할*/
             while (tbCalendar.rows.length > 2) {
                 //열을 지워줌
@@ -272,18 +174,18 @@
             for (i = 1; i <= lastDate.getDate(); i++) {
                 //1일부터 마지막 일까지 돌림
                 cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
-                // cell.innerHTML = '<button class="btn-2" onclick="div_show(' + i + '); day_Sync(' + i + '); ">' + leadingSpaces(i, 2) + '</button>'//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
-                cell.innerHTML = '<button class="btn-2" onclick="day_Sync(' + i + '); ">' + leadingSpaces(i, 2) + '</button>'//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
+                // cell.innerHTML = '<button class="btn-2" onclick="div_show(' + i + '); show_schedule(' + i + '); ">' + leadingSpaces(i, 2) + '</button>'//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
+                cell.innerHTML = '<button class="btn-2" onclick="show_schedule(' + i + '); ">' + leadingSpaces(i, 2) + '</button>'//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
                 cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
                 if (cnt % 7 == 1) {/*일요일 계산*/
                     //1주일이 7일 이므로 일요일 구하기
                     //월화수목금토일을 7로 나눴을때 나머지가 1이면 cnt가 1번째에 위치함을 의미한다
-                    cell.innerHTML = '<button class="btn-2" font color=#F79DC2 onclick="day_Sync(' + i + '); ">' + leadingSpaces(i, 2) + '</button>'
+                    cell.innerHTML = '<button class="btn-2" font color=#F79DC2 onclick="show_schedule(' + i + '); ">' + leadingSpaces(i, 2) + '</button>'
                     //1번째의 cell에만 색칠
                 }
                 if (cnt % 7 == 0) {/* 1주일이 7일 이므로 토요일 구하기*/
                     //월화수목금토일을 7로 나눴을때 나머지가 0이면 cnt가 7번째에 위치함을 의미한다
-                    cell.innerHTML = '<button class="btn-2" font color=skyblue onclick="day_Sync(' + i + '); ">' + leadingSpaces(i, 2) + '</button>'
+                    cell.innerHTML = '<button class="btn-2" font color=skyblue onclick="show_schedule(' + i + '); ">' + leadingSpaces(i, 2) + '</button>'
                     //7번째의 cell에만 색칠
                     row = calendar.insertRow();
                     //토요일 다음에 올 셀을 추가
@@ -296,7 +198,104 @@
                     cell.bgColor = "#FAF58C";//셀의 배경색을 노랑으로 
                 }
             }
+
+
+
         }
+
+        // -----------------------------------------------------------------------------------------------------------
+
+        var cur_ym
+        var cur_day
+        var cur_date
+        var page_flag = 0;
+        var Index = new Array(); // Index[날짜] = 인덱스.
+        var conf_list = new Array(); //  conf_list[날짜][인덱스][객체]
+
+        function ym_sync(year, month) {
+            cur_ym = year * 100 + month;
+        }
+
+        function day_sync(day){
+            cur_day = day;
+        }
+
+        function date_sync(day) { //현재 날짜 동기화 
+            day_sync(day);
+            cur_date = cur_ym * 100 + day;
+            Indicate_date(cur_date); //현재 날짜 표시
+        }
+
+        function Indicate_date(cur_date) {
+
+        }
+
+        function show_schedule(day) { // 현재 날짜 회의 정보 창 띄우기 
+            date_sync(day); //날짜 동기화  시켜줌
+            if (Index[cur_date] == undefined) //해당 날짜에 접속한적이 없다면
+            {
+                conf_list[cur_date] = new Array();
+                Index[cur_date] = 0;
+            }
+            show_date(); // xxxx년 xx월 xx일 회의 목록 출력
+            show_conf();
+        }
+
+        function show_date() { // 현재 날짜 표시
+            var year = parseInt(cur_ym / 100);
+            var month = cur_ym % 100;
+            var day = cur_date - (cur_ym * 100);
+            document.getElementById("cur_date_area").innerHTML = year + "년" + month + "월" + day + "일 회의록";
+        }
+
+        function show_addmenu() { // 회의 작성 창 열고 닫기
+            if (page_flag == 0) {
+                document.getElementById("write").style.display = "block";
+                page_flag = 1;
+            }
+            else {
+                document.getElementById("write").style.display = "none";
+                page_flag = 0;
+            }
+        }
+
+        function add_conf() { //회의 추가 //작성하기
+            Index[cur_date] += 1;
+            var cur_Index = Index[cur_date];
+            var con = document.getElementById("add").elements;
+            conf_list[cur_date][cur_Index] = new Object();
+            for (var i = 0; i < con.length; i++)
+            {
+                conf_list[cur_date][cur_Index][con[i].id] = con[i].value;
+            }
+            show_addmenu(); // 회의 작성 창 닫기
+            show_schedule(cur_day);
+            }
+
+        function show_conf() { //현재 날짜 회의록 출력
+            var cur_Index = Index[cur_date];
+            let str;
+            for (var i = 1; i <= cur_Index; i++) {
+                str += '<div class="conf_list">';
+                for (var key in conf_list[cur_date][i]) {
+                    str += '<div>' + key + " : " + conf_list[cur_date][i][key] + '</div>';
+                }
+                str += '</div>' + '<br />';
+            }
+            document.getElementById("conflist_area").innerHTML = str;
+        }
+
+        function del_conf(index) { // 회의 삭제
+            if (index == Index[cur_date]) Index[cur_date]--;
+            else {
+                for (var i = index; i < index[cur_date]; i++) {
+                    conf_list[cur_date][i] = conf_list[cur_date][i + 1];
+                }
+                Index[cur_date]--;
+            }
+        }
+
+
     </script>
 
 
@@ -341,27 +340,32 @@
         </tr>
     </table>
     <script type="text/javascript">
-        buildCalendar();//
+        buildCalendar();
     </script>
-    <div class="content-section">
-        <div id="half"><input class="coll" , id="btc" type="number" value="12"></div>
-        <font color="#000000">
-            <p id="ts1" value=""></p>
-            <form id="picker" onsubmit="return getVals()">
-                <label>회의제목:</label> <input type="text" id="title" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>시간:</label> <input type="text" id="when" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>장소:</label> <input type="text" id="where" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>문서:</label> <input type="text" id="document" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>주관:</label> <input type="text" id="subjectivity" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>참석:</label> <input type="text" id="attend" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>요청:</label> <input type="text" id="request" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>접수자:</label> <input type="text" id="receipt" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>기타 특이사항:</label> <input type="text" id="ect" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <input type="submit" value="작성하기" />
-            </form>
-            <div id="result">결과</div>
-        </font>
+    <div class="content-section" style="position: relative">
+        <!-- <div id="half"><input class="coll" , id="btc" type="number" value="12"></div> -->
+        <div id="cur_date_area"></div>
+        <input type="button" onclick="show_addmenu()" value="회의 추가하기">
+        <div id="conflist_area"></div>
+        <div id="write" style="display: none; position: absolute; width: 100%; height: 100%; background-color: #2ecc71">
+                <form id="add">
+                    <label>회의제목:</label> <input type="text" id="title" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                    <label>시간:</label> <input type="text" id="when" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                    <label>장소:</label> <input type="text" id="where" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                    <label>문서:</label> <input type="text" id="document" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                    <label>주관:</label> <input type="text" id="subjectivity" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                    <label>참석:</label> <input type="text" id="attend" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                    <label>요청:</label> <input type="text" id="request" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                    <label>접수자:</label> <input type="text" id="receipt" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                    <label>기타 특이사항:</label> <input type="text" id="ect" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                    <input type="button" onclick="add_conf();" value="작성하기"/>
+                </form>
+            </div>
     </div>
+    <script>
+        window.onload(show_schedule(date.getDate()));
+        //  //초기에 오늘 날짜 회의 정보 창 띄워주기
+    </script>
 </body>
 
 </html>
