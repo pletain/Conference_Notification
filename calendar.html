@@ -175,17 +175,17 @@
                 //1일부터 마지막 일까지 돌림
                 cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
                 // cell.innerHTML = '<button class="btn-2" onclick="div_show(' + i + '); show_schedule(' + i + '); ">' + leadingSpaces(i, 2) + '</button>'//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
-                cell.innerHTML = '<button class="btn-2" onclick="show_schedule(' + i + '); ">' + leadingSpaces(i, 2) + '</button>'//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
+                cell.innerHTML = '<button class="btn-2" onclick="show_schedule(' + i + '); ">' + leadingSpaces(i, 2) + '<p id="' + i + '" style="font-size: 10px; display: none;"></p></button>';//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
                 cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
                 if (cnt % 7 == 1) {/*일요일 계산*/
                     //1주일이 7일 이므로 일요일 구하기
                     //월화수목금토일을 7로 나눴을때 나머지가 1이면 cnt가 1번째에 위치함을 의미한다
-                    cell.innerHTML = '<button class="btn-2" font color=#F79DC2 onclick="show_schedule(' + i + '); ">' + leadingSpaces(i, 2) + '</button>'
+                    cell.innerHTML = '<button class="btn-2" font color=#F79DC2 onclick="show_schedule(' + i + '); ">' + leadingSpaces(i, 2) + '<p id="' + i + '" style="font-size: 10px; display: none;"></p></button>';
                     //1번째의 cell에만 색칠
                 }
                 if (cnt % 7 == 0) {/* 1주일이 7일 이므로 토요일 구하기*/
                     //월화수목금토일을 7로 나눴을때 나머지가 0이면 cnt가 7번째에 위치함을 의미한다
-                    cell.innerHTML = '<button class="btn-2" font color=skyblue onclick="show_schedule(' + i + '); ">' + leadingSpaces(i, 2) + '</button>'
+                    cell.innerHTML = '<button class="btn-2" font color=skyblue onclick="show_schedule(' + i + '); ">' + leadingSpaces(i, 2) + '<p id="' + i + '" style="font-size: 10px; display: none;"></p></button>';
                     //7번째의 cell에만 색칠
                     row = calendar.insertRow();
                     //토요일 다음에 올 셀을 추가
@@ -224,12 +224,19 @@
         function date_sync(day) { //현재 날짜 동기화 
             day_sync(day);
             cur_date = cur_ym * 100 + day;
-            Indicate_date(cur_date); //현재 날짜 표시
+            Indicate_cof(cur_date); //현재 날짜 표시
         }
 
-        function Indicate_date(cur_date) {
+        // function Indicate_cof(cur_date) {
+        //     for(var i = 1; i< 32; i++){
+        //         if(Index[cur_date] >= 1){
+        //             document.getElementById(8).style.display = "block";
+                    
+        //         }
+        //     }
+            
 
-        }
+        // }
 
         function show_schedule(day) { // 현재 날짜 회의 정보 창 띄우기 
             date_sync(day); //날짜 동기화  시켜줌
@@ -287,10 +294,6 @@
 
             if (str != " ")
                 document.getElementById("conflist_area").innerHTML = str;
-        }
-
-        function sort(){
-            if(conf_list)
         }
 
         function show_modimenu(index) { // 회의 수정 창 열고 닫기
