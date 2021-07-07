@@ -209,6 +209,7 @@
         var cur_day
         var cur_date
         var page_flag = 0;
+        var modi_index = 0;
         var Index = new Array(); // Index[날짜] = 인덱스.
         var conf_list = new Array(); //  conf_list[날짜][인덱스][객체]
 
@@ -216,7 +217,7 @@
             cur_ym = year * 100 + month;
         }
 
-        function day_sync(day){
+        function day_sync(day) {
             cur_day = day;
         }
 
@@ -264,35 +265,83 @@
             var cur_Index = Index[cur_date];
             var con = document.getElementById("add").elements;
             conf_list[cur_date][cur_Index] = new Object();
-            for (var i = 0; i < con.length; i++)
-            {
+            for (var i = 0; i < con.length; i++) {
                 conf_list[cur_date][cur_Index][con[i].id] = con[i].value;
             }
             show_addmenu(); // 회의 작성 창 닫기
             show_schedule(cur_day);
-            }
+        }
 
         function show_conf() { //현재 날짜 회의록 출력
+            let str = " ";
             var cur_Index = Index[cur_date];
-            let str;
+            document.getElementById("conflist_area").innerHTML = "회의가 없습니다.";
             for (var i = 1; i <= cur_Index; i++) {
                 str += '<div class="conf_list">';
                 for (var key in conf_list[cur_date][i]) {
                     str += '<div>' + key + " : " + conf_list[cur_date][i][key] + '</div>';
                 }
-                str += '</div>' + '<br />';
+                str += '<input type="button" onclick="show_modimenu(' + i + ')" value = "수정하기" />' + '</div>';
+                str += '<input type="button" onclick="del_conf(' + i + ')" value = "삭제하기" />' + '</div>' + '<br />';
             }
-            document.getElementById("conflist_area").innerHTML = str;
+
+            if (str != " ")
+                document.getElementById("conflist_area").innerHTML = str;
+        }
+
+        function sort(){
+            if(conf_list)
+        }
+
+        function show_modimenu(index) { // 회의 수정 창 열고 닫기
+            if (page_flag == 0) {
+                modi_index = index;
+                var cur_Index = index;
+                var con = document.getElementById("modify").elements;
+                for (var i = 0; i < con.length; i++) {
+                    con[i].value = conf_list[cur_date][cur_Index][con[i].id];
+                }
+                document.getElementById("update").style.display = "block";
+                page_flag = 1;
+            }
+            else {
+                modi_index = 0;
+                document.getElementById("update").style.display = "none";
+                page_flag = 0;
+            }
+        }
+
+        function modi_conf(cur_Index) { //회의 수정하기
+            var con = document.getElementById("modify").elements;
+            for (var i = 0; i < con.length; i++) {
+                conf_list[cur_date][cur_Index][con[i].id] = con[i].value;
+            }
+            show_modimenu(0); // 회의 수정 창 닫기
+            show_schedule(cur_day);
         }
 
         function del_conf(index) { // 회의 삭제
-            if (index == Index[cur_date]) Index[cur_date]--;
-            else {
-                for (var i = index; i < index[cur_date]; i++) {
-                    conf_list[cur_date][i] = conf_list[cur_date][i + 1];
+            if (index == Index[cur_date]){
+                Index[cur_date] = Index[cur_date] - 1;
+            } 
+            else
+            {
+                for (var i = index; i < Index[cur_date]; i++)
+                {
+                    conf_list[cur_date][i].title = conf_list[cur_date][i+1].title;
+                    conf_list[cur_date][i].when = conf_list[cur_date][i + 1].when;
+                    conf_list[cur_date][i].where = conf_list[cur_date][i + 1].where;
+                    conf_list[cur_date][i].document = conf_list[cur_date][i + 1].document;
+                    conf_list[cur_date][i].subjectivity = conf_list[cur_date][i + 1].subjectivity;
+                    conf_list[cur_date][i].attend = conf_list[cur_date][i + 1].attend;
+                    conf_list[cur_date][i].request = conf_list[cur_date][i + 1].request;
+                    conf_list[cur_date][i].receipt = conf_list[cur_date][i + 1].receipt;
+                    conf_list[cur_date][i].etc = conf_list[cur_date][i+1].etc;
                 }
-                Index[cur_date]--;
+
+                Index[cur_date] -= 1;
             }
+            show_conf()
         }
 
 
@@ -342,25 +391,39 @@
     <script type="text/javascript">
         buildCalendar();
     </script>
-    <div class="content-section" style="position: relative">
+    <div class="content-section" style="position: relative; overflow: scroll;">
         <!-- <div id="half"><input class="coll" , id="btc" type="number" value="12"></div> -->
         <div id="cur_date_area"></div>
         <input type="button" onclick="show_addmenu()" value="회의 추가하기">
         <div id="conflist_area"></div>
         <div id="write" style="display: none; position: absolute; width: 100%; height: 100%; background-color: #2ecc71">
-                <form id="add">
-                    <label>회의제목:</label> <input type="text" id="title" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                    <label>시간:</label> <input type="text" id="when" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                    <label>장소:</label> <input type="text" id="where" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                    <label>문서:</label> <input type="text" id="document" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                    <label>주관:</label> <input type="text" id="subjectivity" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                    <label>참석:</label> <input type="text" id="attend" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                    <label>요청:</label> <input type="text" id="request" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                    <label>접수자:</label> <input type="text" id="receipt" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                    <label>기타 특이사항:</label> <input type="text" id="ect" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                    <input type="button" onclick="add_conf();" value="작성하기"/>
-                </form>
-            </div>
+            <form id="add">
+                <label>회의제목:</label> <input type="text" id="title" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>시간:</label> <input type="text" id="when" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>장소:</label> <input type="text" id="where" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>문서:</label> <input type="text" id="document" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>주관:</label> <input type="text" id="subjectivity" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>참석:</label> <input type="text" id="attend" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>요청:</label> <input type="text" id="request" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>접수자:</label> <input type="text" id="receipt" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>기타 특이사항:</label> <input type="text" id="ect" placeholder="회의 제목을 입력해주세요." value="" /><br />
+            </form>
+            <input type="button" onclick="add_conf();" value="작성하기" />
+        </div>
+        <div id="update" style="display: none; position: absolute; width: 100%; height: 100%; background-color:#3333FF">
+            <form id="modify">
+                <label>회의제목:</label> <input type="text" id="title" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>시간:</label> <input type="text" id="when" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>장소:</label> <input type="text" id="where" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>문서:</label> <input type="text" id="document" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>주관:</label> <input type="text" id="subjectivity" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>참석:</label> <input type="text" id="attend" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>요청:</label> <input type="text" id="request" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>접수자:</label> <input type="text" id="receipt" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <label>기타 특이사항:</label> <input type="text" id="ect" placeholder="회의 제목을 입력해주세요." value="" /><br />
+            </form>
+            <input id="modi" type="button" onclick="modi_conf(modi_index)" value="수정하기" />
+        </div>
     </div>
     <script>
         window.onload(show_schedule(date.getDate()));
