@@ -4,6 +4,10 @@
 <head>
     <title>달력</title>
     <style type="text/css">
+        table {
+            border-collapse: collapse;
+        }
+
         td {
             width: 50px;
             height: 50px;
@@ -16,6 +20,27 @@
             /*모서리 둥글게*/
         }
 
+        tr {
+            border-bottom: 3px solid #d3d3d3;
+        }
+
+
+
+        #calendar {
+            background-color: #efefef;
+            min-width: 1218px;
+            max-width: 1218px;
+            margin: auto;
+            color: black;
+            z-index: -1000;
+        }
+
+        .conference {
+            max-width: 1218px;
+            min-width: 1218px;
+            left: 50%;
+        }
+
         body {
             background: #000000;
             font-size: 62.5%;
@@ -25,16 +50,26 @@
             background: #efefef;
             font-size: 5rem;
             font-weight: 400;
-            max-width: 2080px;
+            min-width: 1218px;
+            max-width: 1218px;
             height: 2000px;
             margin: 0 auto;
         }
 
         .container {
             padding: 2em;
+            transform: translateY(-500px);
+            transition: 2s ease;
+            z-index: 1000;
         }
 
-        /* GENERAL BUTTON STYLING */
+        .show {
+            transform: translateY(-200%);
+            /* transform: translateY(-2000px); */
+            transition: 1s ease;
+            z-index: 1000;
+        }
+
         button,
         button::after {
             -webkit-transition: all 0.3s;
@@ -45,13 +80,14 @@
 
         button {
             background: none;
-            border: 3px solid #fff;
-            border-radius: 5px;
-            color: #fff;
+            border: 0;
+            color: #000000;
             display: block;
             font-size: 1.6em;
             font-weight: bold;
-            padding: 2em;
+            padding: 2.5em;
+            max-width: 195.59px;
+            max-height: 194px;
             position: relative;
             text-align: center;
             text-transform: uppercase;
@@ -59,17 +95,16 @@
 
         button::before,
         button::after {
-            background: #fff;
+            background: blueviolet;
             content: '';
             position: absolute;
             z-index: -1;
         }
 
         button:hover {
-            color: #2ecc71;
+            color: #ff3f41;
         }
 
-        /* BUTTON 2 */
         .btn-2::after {
             height: 100%;
             left: 0;
@@ -91,6 +126,7 @@
 
         /* BUTTON 3 */
         .btn-3::after {
+            color: #f8352f;
             height: 0;
             left: 50%;
             top: 50%;
@@ -201,16 +237,14 @@
                     row = calendar.insertRow();
                     //토요일 다음에 올 셀을 추가
                 }
-                /*오늘의 날짜에 노란색 칠하기*/
                 if (today.getFullYear() == date.getFullYear()
                     && today.getMonth() == date.getMonth()
                     && i == date.getDate()) {
-                    //달력에 있는 년,달과 내 컴퓨터의 로컬 년,달이 같고, 일이 오늘의 일과 같으면
-                    cell.bgColor = "#FAF58C";//셀의 배경색을 노랑으로 
+                        cell.bgColor = "#ffadab";
                 }
             }
             start_day = doMonth.getDay();
-            conf_indicator();  
+            conf_indicator();
 
 
         }
@@ -246,7 +280,7 @@
                     target[num].style.height = "100px";
                     target[num].style.borderRadius = "50%";
                     target[num].style.background = "red";
-                    target[num].style.textAlign = "center";   
+                    target[num].style.textAlign = "center";
                 }
             }
         }
@@ -254,7 +288,7 @@
         function select_indicator(day) {
             var num
             if (prev_day != undefined) {
-                    calendar.rows[row].cells[col].innerHTML = '<button class="btn-2" font color=#F79DC2 onclick="show_schedule(' + prev_day + '); "><a>' + leadingSpaces(prev_day, 2) + '</a></button>';
+                calendar.rows[row].cells[col].innerHTML = '<button class="btn-2" font color=#F79DC2 onclick="show_schedule(' + prev_day + '); "><a>' + leadingSpaces(prev_day, 2) + '</a></button>';
             }
             num = start_day + day - 1; //0번 부터 시작하므로 1을 빼준다.
             row = parseInt(num / 7) + 2;
@@ -286,7 +320,6 @@
             }
             show_date(); // xxxx년 xx월 xx일 회의 목록 출력
             show_conf();
-            alert("총 회의 개수는 : " + conf_list[cur_date].length);
         }
 
         function show_date() { // 현재 날짜 표시
@@ -298,7 +331,8 @@
 
         function show_addmenu() { // 회의 작성 창 열고 닫기
             if (page_flag == 0) {
-                document.getElementById("write").style.display = "block";
+                var element = document.getElementById("write");
+                element.classList.add('show');
                 page_flag = 1;
             }
             else {
@@ -392,52 +426,52 @@
 </head>
 
 <body>
-    <p></p>
-    <div backgr></div>
-    <!-- <h3 align="center">★Jerry의 달력★</h3> -->
-    <table id="calendar" border="3" align="center" style="border-color:#c4c4c4">
-        <tr style="color:#fff;">
-            <!-- label은 마우스로 클릭을 편하게 해줌 -->
-            <td><button class=" btn-3" onclick="prevCalendar()">
-                    < </label> </td> <td align="center" id="tbCalendarYM" colspan="5">
-                        yyyy년 m월</td>
-            <td><button class="btn-3" onclick="nextCalendar()"> >
-                    </label></td>
+    <table id="calendar">
+        <tr>
+            <td>
+                <button class=" btn-3" onclick="prevCalendar()">&nbsp;<&nbsp;</button> </td> 
+                <td align="center" id="tbCalendarYM" colspan="2" style="color: #f8352f; font-weight: 500; font-size: 40px;">
+                        yyyy년 m월
+                </td>
+            <td>
+                <button class="btn-3" onclick="nextCalendar()">&nbsp;>&nbsp;</button>
+            </td>
+            <td>
+                    <input type="button" colspan="3"onclick="show_addmenu()" value="회의 추가하기">
+                    </td>
         </tr>
-        <tr style="background-color: blueviolet;">
+        <tr style="background-color: #f9f9f9; color: #000;">
             <td align="center">
                 <font color="#F79DC2">일
             </td>
             <td align="center">
-                <font color="#FFFFFF">월
+                월
             </td>
             <td align="center">
-                <font color="#FFFFFF">화
+                화
             </td>
             <td align="center">
-                <font color="#FFFFFF">수
+                수
             </td>
             <td align="center">
-                <font color="#FFFFFF">목
+                목
             </td>
-            <td align="center">
-                <font color="#FFFFFF">금
+            <td align="center">금
             </td>
-            <td align="center">
-                <font color="skyblue">토
+            <td align="center" style="font-weight: 100; color: skyblue">토
             </td>
-            </strong>
         </tr>
     </table>
     <script type="text/javascript">
         buildCalendar();
     </script>
-    <div class="content-section" style="position: relative; overflow: scroll;">
-        <!-- <div id="half"><input class="coll" , id="btc" type="number" value="12"></div> -->
-        <div id="cur_date_area"></div>
-        <input type="button" onclick="show_addmenu()" value="회의 추가하기">
-        <div id="conflist_area"></div>
-        <div id="write" style="display: none; position: absolute; width: 100%; height: 100%; background-color: #2ecc71">
+    <class="conference" align="center">
+        <div class="content-section" style="position: relative; overflow: scroll;">
+            <div id="cur_date_area"></div>
+            <div id="conflist_area"></div>
+        </div>
+        <div class="conference" id="write"
+            style="width:100%; height:100%; position: absolute; background-color: #2ecc71">
             <form id="add">
                 <label>회의제목:</label> <input type="text" id="title" placeholder="회의 제목을 입력해주세요." value="" /><br />
                 <label>시간:</label> <input type="text" id="when" placeholder="회의 제목을 입력해주세요." value="" /><br />
@@ -465,11 +499,11 @@
             </form>
             <input id="modi" type="button" onclick="modi_conf(modi_index)" value="수정하기" />
         </div>
-    </div>
-    <script> 
-        window.onload(show_schedule(date.getDate()));
+        </p>
+        <script>
+            window.onload(show_schedule(date.getDate()));
         //  //초기에 오늘 날짜 회의 정보 창 띄워주기
-    </script>
+        </script>
 </body>
 
 </html>
