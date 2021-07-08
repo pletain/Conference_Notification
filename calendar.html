@@ -51,8 +51,9 @@
             display: block;
             font-size: 1.6em;
             font-weight: bold;
-            padding: 2em 3em;
+            padding: 2em;
             position: relative;
+            text-align: center;
             text-transform: uppercase;
         }
 
@@ -74,10 +75,18 @@
             left: 0;
             top: 0;
             width: 0;
+            display: flex;
         }
 
         .btn-2:hover:after {
             width: 100%;
+        }
+
+        .circle {
+            padding: 0.02em;
+            border-radius: 50%;
+            text-align: center;
+            background: coral;
         }
 
         /* BUTTON 3 */
@@ -116,6 +125,7 @@
             //today.getFullYear() 현재 년도//today.getMonth() 월  //today.getDate() 일 
             //getMonth()는 현재 달을 받아 오므로 이전달을 출력하려면 -1을 해줘야함
             today = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+            prev_day = undefined;
             buildCalendar(); //달력 cell 만들어 출력 
         }
 
@@ -124,6 +134,7 @@
             //today.getFullYear() 현재 년도//today.getMonth() 월  //today.getDate() 일 
             //getMonth()는 현재 달을 받아 오므로 다음달을 출력하려면 +1을 해줘야함
             today = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+            prev_day = undefined;
             buildCalendar();//달력 cell 만들어 출력
 
         }
@@ -175,17 +186,17 @@
                 //1일부터 마지막 일까지 돌림
                 cell = row.insertCell();//열 한칸한칸 계속 만들어주는 역할
                 // cell.innerHTML = '<button class="btn-2" onclick="div_show(' + i + '); show_schedule(' + i + '); ">' + leadingSpaces(i, 2) + '</button>'//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
-                cell.innerHTML = '<button class="btn-2" onclick="show_schedule(' + i + '); ">' + leadingSpaces(i, 2) + '<p id="' + i + '" style="font-size: 10px; display: none;"></p></button>';//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
+                cell.innerHTML = '<button class="btn-2" onclick="show_schedule(' + i + '); "><a>' + leadingSpaces(i, 2) + '</a></button>'//셀을 1부터 마지막 day까지 HTML 문법에 넣어줌
                 cnt = cnt + 1;//열의 갯수를 계속 다음으로 위치하게 해주는 역할
                 if (cnt % 7 == 1) {/*일요일 계산*/
                     //1주일이 7일 이므로 일요일 구하기
                     //월화수목금토일을 7로 나눴을때 나머지가 1이면 cnt가 1번째에 위치함을 의미한다
-                    cell.innerHTML = '<button class="btn-2" font color=#F79DC2 onclick="show_schedule(' + i + '); ">' + leadingSpaces(i, 2) + '<p id="' + i + '" style="font-size: 10px; display: none;"></p></button>';
+                    cell.innerHTML = '<button class="btn-2" font color=#F79DC2 onclick="show_schedule(' + i + '); "><a>' + leadingSpaces(i, 2) + '</a></button>'
                     //1번째의 cell에만 색칠
                 }
                 if (cnt % 7 == 0) {/* 1주일이 7일 이므로 토요일 구하기*/
                     //월화수목금토일을 7로 나눴을때 나머지가 0이면 cnt가 7번째에 위치함을 의미한다
-                    cell.innerHTML = '<button class="btn-2" font color=skyblue onclick="show_schedule(' + i + '); ">' + leadingSpaces(i, 2) + '<p id="' + i + '" style="font-size: 10px; display: none;"></p></button>';
+                    cell.innerHTML = '<button class="btn-2" font color=skyblue onclick="show_schedule(' + i + '); "><a>' + leadingSpaces(i, 2) + '</a></button>'
                     //7번째의 cell에만 색칠
                     row = calendar.insertRow();
                     //토요일 다음에 올 셀을 추가
@@ -198,21 +209,59 @@
                     cell.bgColor = "#FAF58C";//셀의 배경색을 노랑으로 
                 }
             }
-
+            start_day = doMonth.getDay();
+            conf_indicator();  
 
 
         }
 
         // -----------------------------------------------------------------------------------------------------------
-
+        var start_day
         var cur_ym
         var cur_day
         var cur_date
+        var row
+        var col
+        var prev_day
         var page_flag = 0;
         var modi_index = 0;
         var Index = new Array(); // Index[날짜] = 인덱스.
         var conf_list = new Array(); //  conf_list[날짜][인덱스][객체]
 
+        function conf_indicator() {
+            var check_date
+            var check_row
+            var check_col
+            var num
+            let target
+
+            for (var d = 1; d < 32; d++) {
+                check_date = cur_ym * 100 + d;
+                //alert(check_date);
+                if (Index[check_date] > 0) {
+                    num = d - 1; //0번 부터 시작하므로 1을 빼준다.
+                    target = document.getElementById("calendar").getElementsByTagName("a");
+                    target[num].style.padding = "0.02em";
+                    target[num].style.width = "100px";
+                    target[num].style.height = "100px";
+                    target[num].style.borderRadius = "50%";
+                    target[num].style.background = "red";
+                    target[num].style.textAlign = "center";   
+                }
+            }
+        }
+
+        function select_indicator(day) {
+            var num
+            if (prev_day != undefined) {
+                    calendar.rows[row].cells[col].innerHTML = '<button class="btn-2" font color=#F79DC2 onclick="show_schedule(' + prev_day + '); "><a>' + leadingSpaces(prev_day, 2) + '</a></button>';
+            }
+            num = start_day + day - 1; //0번 부터 시작하므로 1을 빼준다.
+            row = parseInt(num / 7) + 2;
+            col = parseInt(num % 7);
+            prev_day = day;
+            calendar.rows[row].cells[col].innerHTML = '<button class="btn-2" style="border: 4px solid red;" font color=#F79DC2 onclick="show_schedule(' + prev_day + '); "><a>' + leadingSpaces(prev_day, 2) + '</a></button>';
+        }
         function ym_sync(year, month) {
             cur_ym = year * 100 + month;
         }
@@ -224,22 +273,12 @@
         function date_sync(day) { //현재 날짜 동기화 
             day_sync(day);
             cur_date = cur_ym * 100 + day;
-            Indicate_cof(cur_date); //현재 날짜 표시
         }
-
-        // function Indicate_cof(cur_date) {
-        //     for(var i = 1; i< 32; i++){
-        //         if(Index[cur_date] >= 1){
-        //             document.getElementById(8).style.display = "block";
-                    
-        //         }
-        //     }
-            
-
-        // }
 
         function show_schedule(day) { // 현재 날짜 회의 정보 창 띄우기 
             date_sync(day); //날짜 동기화  시켜줌
+            select_indicator(day);
+            conf_indicator();
             if (Index[cur_date] == undefined) //해당 날짜에 접속한적이 없다면
             {
                 conf_list[cur_date] = new Array();
@@ -247,6 +286,7 @@
             }
             show_date(); // xxxx년 xx월 xx일 회의 목록 출력
             show_conf();
+            alert("총 회의 개수는 : " + conf_list[cur_date].length);
         }
 
         function show_date() { // 현재 날짜 표시
@@ -324,14 +364,12 @@
         }
 
         function del_conf(index) { // 회의 삭제
-            if (index == Index[cur_date]){
+            if (index == Index[cur_date]) {
                 Index[cur_date] = Index[cur_date] - 1;
-            } 
-            else
-            {
-                for (var i = index; i < Index[cur_date]; i++)
-                {
-                    conf_list[cur_date][i].title = conf_list[cur_date][i+1].title;
+            }
+            else {
+                for (var i = index; i < Index[cur_date]; i++) {
+                    conf_list[cur_date][i].title = conf_list[cur_date][i + 1].title;
                     conf_list[cur_date][i].when = conf_list[cur_date][i + 1].when;
                     conf_list[cur_date][i].where = conf_list[cur_date][i + 1].where;
                     conf_list[cur_date][i].document = conf_list[cur_date][i + 1].document;
@@ -339,7 +377,7 @@
                     conf_list[cur_date][i].attend = conf_list[cur_date][i + 1].attend;
                     conf_list[cur_date][i].request = conf_list[cur_date][i + 1].request;
                     conf_list[cur_date][i].receipt = conf_list[cur_date][i + 1].receipt;
-                    conf_list[cur_date][i].etc = conf_list[cur_date][i+1].etc;
+                    conf_list[cur_date][i].etc = conf_list[cur_date][i + 1].etc;
                 }
 
                 Index[cur_date] -= 1;
@@ -357,16 +395,16 @@
     <p></p>
     <div backgr></div>
     <!-- <h3 align="center">★Jerry의 달력★</h3> -->
-    <table id="calendar" border="3" align="center" style="border-color:#c4c4c4 ">
+    <table id="calendar" border="3" align="center" style="border-color:#c4c4c4">
         <tr style="color:#fff;">
             <!-- label은 마우스로 클릭을 편하게 해줌 -->
             <td><button class=" btn-3" onclick="prevCalendar()">
-                    <</label> </td> <td align="center" id="tbCalendarYM" colspan="5">
+                    < </label> </td> <td align="center" id="tbCalendarYM" colspan="5">
                         yyyy년 m월</td>
-            <td><button class="btn-3" onclick="nextCalendar()">>
+            <td><button class="btn-3" onclick="nextCalendar()"> >
                     </label></td>
         </tr>
-        <tr>
+        <tr style="background-color: blueviolet;">
             <td align="center">
                 <font color="#F79DC2">일
             </td>
@@ -428,7 +466,7 @@
             <input id="modi" type="button" onclick="modi_conf(modi_index)" value="수정하기" />
         </div>
     </div>
-    <script>
+    <script> 
         window.onload(show_schedule(date.getDate()));
         //  //초기에 오늘 날짜 회의 정보 창 띄워주기
     </script>
