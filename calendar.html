@@ -36,6 +36,7 @@
         }
 
         .conference {
+            position: relative;
             max-width: 1218px;
             min-width: 1218px;
             left: 50%;
@@ -63,11 +64,31 @@
             z-index: 1000;
         }
 
+        #write{
+            position: absolute;
+            margin: auto;
+            top:100%;
+            max-width: 1218px;
+            min-width: 1218px;
+            left: 50%;
+        }
+        .hide{
+            display: none;
+        }
+
         .show {
-            transform: translateY(-200%);
-            /* transform: translateY(-2000px); */
-            transition: 1s ease;
-            z-index: 1000;
+            background: #fff;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);
+            top: 100%; 
+            text-align: left;
+        }
+
+        #write.show{
+            top: 50%;    
         }
 
         button,
@@ -336,7 +357,8 @@
                 page_flag = 1;
             }
             else {
-                document.getElementById("write").style.display = "none";
+                var element = document.getElementById("write");
+                element.classList.remove('show');
                 page_flag = 0;
             }
         }
@@ -425,7 +447,7 @@
 
 </head>
 
-<body>
+<body style="overflow: hidden;">
     <table id="calendar">
         <tr>
             <td>
@@ -465,13 +487,12 @@
     <script type="text/javascript">
         buildCalendar();
     </script>
-    <class="conference" align="center">
-        <div class="content-section" style="position: relative; overflow: scroll;">
+    <p class="conference" align="center">
+        <div class="content-section" style="overflow: scroll;">
             <div id="cur_date_area"></div>
             <div id="conflist_area"></div>
         </div>
-        <div class="conference" id="write"
-            style="width:100%; height:100%; position: absolute; background-color: #2ecc71">
+        <div id="write" style="width:100%; height:100%; background-color: #2ecc71">
             <form id="add">
                 <label>회의제목:</label> <input type="text" id="title" placeholder="회의 제목을 입력해주세요." value="" /><br />
                 <label>시간:</label> <input type="text" id="when" placeholder="회의 제목을 입력해주세요." value="" /><br />
@@ -499,7 +520,7 @@
             </form>
             <input id="modi" type="button" onclick="modi_conf(modi_index)" value="수정하기" />
         </div>
-        </p>
+    </p>
         <script>
             window.onload(show_schedule(date.getDate()));
         //  //초기에 오늘 날짜 회의 정보 창 띄워주기
