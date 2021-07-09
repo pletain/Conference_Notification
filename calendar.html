@@ -28,67 +28,57 @@
 
         #calendar {
             background-color: #efefef;
-            min-width: 1218px;
-            max-width: 1218px;
             margin: auto;
             color: black;
             z-index: -1000;
         }
 
-        .conference {
-            position: relative;
-            max-width: 1218px;
-            min-width: 1218px;
-            left: 50%;
-        }
 
         body {
             background: #000000;
             font-size: 62.5%;
         }
 
+        .conference_section {
+            position: relative;
+            overflow: hidden;
+        }
+
         .content-section {
             background: #efefef;
             font-size: 5rem;
             font-weight: 400;
-            min-width: 1218px;
-            max-width: 1218px;
+            min-width: 1386px;
+            max-width: 1386px;
             height: 2000px;
             margin: 0 auto;
         }
 
-        .container {
-            padding: 2em;
-            transform: translateY(-500px);
-            transition: 2s ease;
-            z-index: 1000;
-        }
-
-        #write{
+        .create {
+            margin: 0 auto;
             position: absolute;
-            margin: auto;
-            top:100%;
-            max-width: 1218px;
-            min-width: 1218px;
-            left: 50%;
-        }
-        .hide{
-            display: none;
-        }
-
-        .show {
+            max-width: 1386px;
+            min-width: 1386px;
             background: #fff;
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
             transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);
-            top: 100%; 
-            text-align: left;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
-        #write.show{
-            top: 50%;    
+        .conference_section.show .create {
+            top: 0%;
+        }
+
+        .nav-bar {
+            background-color: #a19c9c;
+            /* text-align: right; */
+            display: flex;
+            flex-direction: row-reverse;
+            margin: 0 auto;
+            max-width: 1386px;
+            min-width: 1386px;
+            height: 61px;
         }
 
         button,
@@ -261,7 +251,7 @@
                 if (today.getFullYear() == date.getFullYear()
                     && today.getMonth() == date.getMonth()
                     && i == date.getDate()) {
-                        cell.bgColor = "#ffadab";
+                    cell.bgColor = "#ffadab";
                 }
             }
             start_day = doMonth.getDay();
@@ -352,12 +342,12 @@
 
         function show_addmenu() { // 회의 작성 창 열고 닫기
             if (page_flag == 0) {
-                var element = document.getElementById("write");
+                var element = document.getElementById("conference_section");
                 element.classList.add('show');
                 page_flag = 1;
             }
             else {
-                var element = document.getElementById("write");
+                var element = document.getElementById("conference_section");
                 element.classList.remove('show');
                 page_flag = 0;
             }
@@ -451,16 +441,22 @@
     <table id="calendar">
         <tr>
             <td>
-                <button class=" btn-3" onclick="prevCalendar()">&nbsp;<&nbsp;</button> </td> 
-                <td align="center" id="tbCalendarYM" colspan="2" style="color: #f8352f; font-weight: 500; font-size: 40px;">
+                <button style="padding: 0; text-align: center;" class="btn-3"
+                    onclick="prevCalendar()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<</button>
+                        </td> <td id="tbCalendarYM" colspan="2"
+                        style="color: #f8352f; font-weight: 500; font-size: 40px;">
                         yyyy년 m월
-                </td>
-            <td>
-                <button class="btn-3" onclick="nextCalendar()">&nbsp;>&nbsp;</button>
             </td>
             <td>
-                    <input type="button" colspan="3"onclick="show_addmenu()" value="회의 추가하기">
-                    </td>
+                <button style="padding: 0;" class="btn-3"
+                    onclick="nextCalendar()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;></button>
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+                <button style="padding: 0; font-weight:1000;" class="btn-3"
+                    onclick="show_addmenu()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+            </td>
         </tr>
         <tr style="background-color: #f9f9f9; color: #000;">
             <td align="center">
@@ -487,12 +483,20 @@
     <script type="text/javascript">
         buildCalendar();
     </script>
-    <p class="conference" align="center">
+    <div id="conference_section" class="conference_section">
+        <div class="nav-bar">
+            <tr>
+                <td colspan="5"></td>
+                <td>
+                        <button style="padding: 0; font-weight:1000; width: 100px" class="btn-3" onclick="show_addmenu()">+</button>
+                </td>
+            </tr>
+        </div>
         <div class="content-section" style="overflow: scroll;">
             <div id="cur_date_area"></div>
             <div id="conflist_area"></div>
         </div>
-        <div id="write" style="width:100%; height:100%; background-color: #2ecc71">
+        <div class="create" style="width:100%; height:100%; background-color: #2ecc71">
             <form id="add">
                 <label>회의제목:</label> <input type="text" id="title" placeholder="회의 제목을 입력해주세요." value="" /><br />
                 <label>시간:</label> <input type="text" id="when" placeholder="회의 제목을 입력해주세요." value="" /><br />
@@ -506,25 +510,26 @@
             </form>
             <input type="button" onclick="add_conf();" value="작성하기" />
         </div>
-        <div id="update" style="display: none; position: absolute; width: 100%; height: 100%; background-color:#3333FF">
-            <form id="modify">
-                <label>회의제목:</label> <input type="text" id="title" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>시간:</label> <input type="text" id="when" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>장소:</label> <input type="text" id="where" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>문서:</label> <input type="text" id="document" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>주관:</label> <input type="text" id="subjectivity" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>참석:</label> <input type="text" id="attend" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>요청:</label> <input type="text" id="request" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>접수자:</label> <input type="text" id="receipt" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>기타 특이사항:</label> <input type="text" id="ect" placeholder="회의 제목을 입력해주세요." value="" /><br />
-            </form>
-            <input id="modi" type="button" onclick="modi_conf(modi_index)" value="수정하기" />
-        </div>
-    </p>
-        <script>
-            window.onload(show_schedule(date.getDate()));
+    </div>
+
+    <div id="update" style="display: none; position: absolute; width: 100%; height: 100%; background-color:#3333FF">
+        <form id="modify">
+            <label>회의제목:</label> <input type="text" id="title" placeholder="회의 제목을 입력해주세요." value="" /><br />
+            <label>시간:</label> <input type="text" id="when" placeholder="회의 제목을 입력해주세요." value="" /><br />
+            <label>장소:</label> <input type="text" id="where" placeholder="회의 제목을 입력해주세요." value="" /><br />
+            <label>문서:</label> <input type="text" id="document" placeholder="회의 제목을 입력해주세요." value="" /><br />
+            <label>주관:</label> <input type="text" id="subjectivity" placeholder="회의 제목을 입력해주세요." value="" /><br />
+            <label>참석:</label> <input type="text" id="attend" placeholder="회의 제목을 입력해주세요." value="" /><br />
+            <label>요청:</label> <input type="text" id="request" placeholder="회의 제목을 입력해주세요." value="" /><br />
+            <label>접수자:</label> <input type="text" id="receipt" placeholder="회의 제목을 입력해주세요." value="" /><br />
+            <label>기타 특이사항:</label> <input type="text" id="ect" placeholder="회의 제목을 입력해주세요." value="" /><br />
+        </form>
+        <input id="modi" type="button" onclick="modi_conf(modi_index)" value="수정하기" />
+    </div>
+    <script>
+        window.onload(show_schedule(date.getDate()));
         //  //초기에 오늘 날짜 회의 정보 창 띄워주기
-        </script>
+    </script>
 </body>
 
 </html>
