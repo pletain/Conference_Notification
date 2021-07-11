@@ -164,7 +164,8 @@
             overflow: scroll;
             -ms-overflow-style: none;
             margin: 10px;
-            border-left: 15px solid #2f43f1;
+            border-radius: 2%;
+            border-left: 15px solid #ff2d54;
             padding-left: 25px;
             width: 98%;
             height: 700px;
@@ -176,24 +177,23 @@
 
         .conf_item:hover{
             transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);
-            background-color: #858585;
+            background-color: #adadad;
         }
 
         .del_button{
-            margin: 0px 0px 0px 25px; 
-            background-color: #3a3a3d;
-            height: 40px;
+            margin: 0px 0px 0px 1080px;
+            height: 50px;
+            width: 250px;
+            text-align: right;  
+            font-size: 40px;
+            color: #ff443a;
+            font-weight: 400;
+            font-size: 45px;
+            cursor: pointer;
         }
 
-        .del_button .nav-btn{
-            display: flex;
-            height: 100%;
-            margin: 5px 0px 0px 1275px;
-            background-color: #3333FF;
-        }
-
-        .del_button .nav-btn:hover{
-            color: #28cd41;
+        .del_button:hover{
+            color: #ff1d11;
         }
 
         .title {
@@ -204,13 +204,13 @@
         }
 
         .when {
-            color: #2f43f1;
+            color: #ff2d54;
             font-size: 45px;
             font-weight: 700;
         }
 
         .subjectivity {
-            color: #2f43f1;
+            color: #ff2d54;
             font-size: 45px;
             font-weight: 700;
         }
@@ -227,44 +227,32 @@
             min-width: 1386px;
         }
 
-        /* .receipt{
-            width: 10%;
-        }
-
-        .request{
-            width: 10%;
-        }
-        
-        .enroll{
-            width: 10%;
-        } */
-
         .where {
-            color: #2f43f1;
+            color: #ff2d54;
             font-size: 45px;
             font-weight: 700;
         }
 
         .document {
-            color: #2f43f1;
+            color: #ff2d54;
             font-size: 45px;
             font-weight: 700;
         }
 
         .attend {
-            color: #2f43f1;
+            color: #ff2d54;
             font-size: 45px;
             font-weight: 700;
         }
 
         .content {
-            color: #2f43f1;
+            color: #ff2d54;
             font-size: 45px;
             font-weight: 700;
         }
 
         .etc {
-            color: #2f43f1;
+            color: #ff2d54;
             font-size: 45px;
             font-weight: 700;
         }
@@ -592,7 +580,7 @@
                 if (today.getFullYear() == date.getFullYear()
                     && today.getMonth() == date.getMonth()
                     && i == date.getDate()) {
-                    cell.bgColor = "#ffadab";
+                    cell.bgColor = "#cccccc";
                 }
             }
             start_day = doMonth.getDay();
@@ -626,12 +614,7 @@
                 if (Index[check_date] > 0) {
                     num = d - 1; //0번 부터 시작하므로 1을 빼준다.
                     target = document.getElementById("calendar").getElementsByTagName("a");
-                    target[num].style.padding = "0.02em";
-                    target[num].style.width = "100px";
-                    target[num].style.height = "100px";
-                    target[num].style.borderRadius = "50%";
-                    target[num].style.background = "red";
-                    target[num].style.textAlign = "center";
+                    target[num].style.color = "#ff2d54";
                 }
             }
         }
@@ -700,14 +683,17 @@
             conf_list[cur_date][cur_Index] = new Object();
             for (var i = 0; i < 5; i++) {
                 conf_list[cur_date][cur_Index][con[i].id] = con[i].value;
+                con[i].value = "";
             }
             for (var i = 5; i < 9; i++) {
                 if (con[i].checked == true) {
                     conf_list[cur_date][cur_Index][con[i].id] = con[i].value;
                 }
+                con[i].value = "";
             }
             for (var i = 9; i < con.length; i++) {
                 conf_list[cur_date][cur_Index][con[i].id] = con[i].value;
+                con[i].value = "";
             }
             show_addmenu(); // 회의 작성 창 닫기
             show_schedule(cur_day);
@@ -718,7 +704,7 @@
             var cur_Index = Index[cur_date];
             document.getElementById("conflist_area").innerHTML = '<div class="no_event">회의 없음</div>';
             for (var i = 1; i <= cur_Index; i++) {
-                str += '<div class="del_button"><input type="button" class="btn-3 nav-btn" onclick="del_conf(' + i + ')" value="-" /></div>'
+                str += '<div class="del_button" onclick="del_conf(' + i + ')">회의 삭제</div>'
                 str += '<div class="conf_item" onclick="show_modimenu(' + i + ')">';
                 str += '<div class="title">' + conf_list[cur_date][i]["title"] + '</div>';
                 str += '<div class="subjectivity">' + conf_list[cur_date][i]["subjectivity"] + '</div>';
@@ -787,6 +773,7 @@
         }
 
         function del_conf(index) { // 회의 삭제
+            alert("정말 삭제하시겠습니까? 담당관님의 등짝 스매싱을 맞을 수 있습니다!!");
             if (index == Index[cur_date]) {
                 Index[cur_date] = Index[cur_date] - 1;
             }
@@ -911,9 +898,9 @@
                     <label>요청 </label> <input type="text" id="request" value="" /><br />
                     <div class="check">
                         <label>장소</label>
-                        <input type='checkbox' id="where" value='vtc' onclick='checkOnlyOne(this)' />화상회의실
-                        <input type='checkbox' id='where' value='osc' onclick='checkOnlyOne(this)' />OSC
-                        <input type='checkbox' id='where' value='ccc' onclick='checkOnlyOne(this)' />CCC
+                        <input type='checkbox' name ="where" id="where" value='vtc' onclick='checkOnlyOne(this)' />화상회의실
+                        <input type='checkbox' name ="where" id='where' value='osc' onclick='checkOnlyOne(this)' />OSC
+                        <input type='checkbox' name ="where" id='where' value='ccc' onclick='checkOnlyOne(this)' />CCC
                         <label>&nbsp;통합예약 체계 등록 여부</label>
                         <input type='checkbox' id='enroll' value="" />
                     </div>
@@ -946,9 +933,9 @@
                     <label>요청 </label> <input type="text" id="request" onchange="CTurn_on()" value="" /><br />
                     <div class="check">
                         <label>장소</label>
-                        <input type='checkbox' id="where" onchange="CTurn_on()" value='vtc' onclick='checkOnlyOne(this)' />화상회의실
-                        <input type='checkbox' id='where' onchange="CTurn_on()" value='osc' onclick='checkOnlyOne(this)' />OSC
-                        <input type='checkbox' id='where' onchange="CTurn_on()" value='ccc' onclick='checkOnlyOne(this)' />CCC
+                        <input type='checkbox' name ="where" id="where" onchange="CTurn_on()" value='vtc' onclick='checkOnlyOne(this)' />화상회의실
+                        <input type='checkbox' name ="where" id='where' onchange="CTurn_on()" value='osc' onclick='checkOnlyOne(this)' />OSC
+                        <input type='checkbox' name ="where" id='where' onchange="CTurn_on()" value='ccc' onclick='checkOnlyOne(this)' />CCC
                         <label>&nbsp;통합예약 체계 등록 여부</label>
                         <input type='checkbox' id='enroll' onchange="CTurn_on()" value="" />
                     </div>
