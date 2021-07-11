@@ -78,11 +78,25 @@
             transform: translateX(-50%);
         }
 
+        .update {
+            margin: 0 auto;
+            position: absolute;
+            max-width: 1386px;
+            min-width: 1386px;
+            width: 100%;
+            height: 100%;
+            background-color: #f8f8f8;
+            transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
         .create_nav {
             line-height: 1.5px;
             background-color: #393939;
-            border-top-left-radius: 0.8em;
-            border-top-right-radius: 0.8em;
+            border-top-left-radius: 0.3em;
+            border-top-right-radius: 0.3em;
             text-shadow: 0px-1px 1px rgba(0, 0, 0, 0.3);
             border-top: 1px solid #3a3a3d;
             border-bottom: 1px solid #171718;
@@ -112,7 +126,7 @@
         }
 
         .add {
-            color:#ff443a;
+            color: #ff443a;
             font-weight: 400;
             font-size: 45px;
             text-align: center;
@@ -121,11 +135,11 @@
             width: 10%;
             height: 100%;
             cursor: pointer;
-            
+
         }
 
-        .add.off{
-            color:#a8a8a8;
+        .add.off {
+            color: #a8a8a8;
             pointer-events: none;
         }
 
@@ -144,9 +158,124 @@
             height: 100%;
         }
 
+        .conf_item {
+            transition: 1s;
+            cursor: pointer;
+            overflow: scroll;
+            -ms-overflow-style: none;
+            margin: 10px;
+            border-left: 15px solid #2f43f1;
+            padding-left: 25px;
+            width: 98%;
+            height: 700px;
+        }
+
+        .conf_item::-webkit-scrollbar {
+            display: none !important;
+        }
+
+        .conf_item:hover{
+            transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);
+            background-color: #858585;
+        }
+
+        .del_button{
+            margin: 0px 0px 0px 25px; 
+            background-color: #3a3a3d;
+            height: 40px;
+        }
+
+        .del_button .nav-btn{
+            display: flex;
+            height: 100%;
+            margin: 5px 0px 0px 1275px;
+            background-color: #3333FF;
+        }
+
+        .del_button .nav-btn:hover{
+            color: #28cd41;
+        }
+
+        .title {
+            font-size: 80px;
+            font-weight: 700;
+            margin-bottom: 5px;
+
+        }
+
+        .when {
+            color: #2f43f1;
+            font-size: 45px;
+            font-weight: 700;
+        }
+
+        .subjectivity {
+            color: #2f43f1;
+            font-size: 45px;
+            font-weight: 700;
+        }
+
+        .sub_stuff {
+            padding-bottom: 3px;
+            border-bottom: 2px solid #b1b1ba;
+            display: flex;
+            color: #7e7e83;
+            font-size: 30px;
+            font-weight: bold;
+            margin: auto;
+            max-width: 1386px;
+            min-width: 1386px;
+        }
+
+        /* .receipt{
+            width: 10%;
+        }
+
+        .request{
+            width: 10%;
+        }
+        
+        .enroll{
+            width: 10%;
+        } */
+
+        .where {
+            color: #2f43f1;
+            font-size: 45px;
+            font-weight: 700;
+        }
+
+        .document {
+            color: #2f43f1;
+            font-size: 45px;
+            font-weight: 700;
+        }
+
+        .attend {
+            color: #2f43f1;
+            font-size: 45px;
+            font-weight: 700;
+        }
+
+        .content {
+            color: #2f43f1;
+            font-size: 45px;
+            font-weight: 700;
+        }
+
+        .etc {
+            color: #2f43f1;
+            font-size: 45px;
+            font-weight: 700;
+        }
+
 
 
         .conference_section.show .create {
+            top: 0%;
+        }
+
+        .conference_section.modi .update {
             top: 0%;
         }
 
@@ -242,7 +371,7 @@
         .detail label {
             margin: 0 0 0 10px;
             color: #fd2015;
-            font-weight:500;
+            font-weight: 500;
         }
 
         .detail input {
@@ -253,36 +382,41 @@
             height: 50px;
         }
 
-        .detail #receipt{
+        .detail #receipt {
             width: 38%;
         }
-       
+
 
         .check {
             font-size: 40px;
         }
 
-        .check label{
+        .check label {
             font-size: 45px;
             margin: 0 0 0 10px;
         }
-        .check input{
+
+        .check input {
             width: 5%;
             height: 40px;
             line-height: 65px;
         }
 
-        textarea{
+        textarea {
             width: 98%;
             height: 300px;
             margin: 0 10px 0 10px;
             resize: none;
             overflow: scroll;
-            font-size: 30px;
+            font-size: 50px;
             border: 3px solid #ccd1ff;
         }
 
-        #etc{
+        textarea::-webkit-scrollbar {
+            display: none !important;
+        }
+
+        #etc {
             height: 200px;
         }
 
@@ -489,7 +623,6 @@
 
             for (var d = 1; d < 32; d++) {
                 check_date = cur_ym * 100 + d;
-                //alert(check_date);
                 if (Index[check_date] > 0) {
                     num = d - 1; //0번 부터 시작하므로 1을 빼준다.
                     target = document.getElementById("calendar").getElementsByTagName("a");
@@ -554,7 +687,7 @@
                 page_flag = 1;
             }
             else {
-                var element = document.getElementById("conference_section");
+                var element = document.getElementById("conference_section")
                 element.classList.remove('show');
                 page_flag = 0;
             }
@@ -564,18 +697,16 @@
             Index[cur_date] += 1;
             var cur_Index = Index[cur_date];
             var con = document.getElementById("add").elements;
-            var place = document.getElementsByName("where");
             conf_list[cur_date][cur_Index] = new Object();
             for (var i = 0; i < 5; i++) {
                 conf_list[cur_date][cur_Index][con[i].id] = con[i].value;
             }
-            for(var i= 5; i< 9; i++){
-               alert(con[i].checked)
-                if(con[i].checked== true){
+            for (var i = 5; i < 9; i++) {
+                if (con[i].checked == true) {
                     conf_list[cur_date][cur_Index][con[i].id] = con[i].value;
                 }
             }
-            for(var i= 9; i< con.length; i++){
+            for (var i = 9; i < con.length; i++) {
                 conf_list[cur_date][cur_Index][con[i].id] = con[i].value;
             }
             show_addmenu(); // 회의 작성 창 닫기
@@ -587,12 +718,23 @@
             var cur_Index = Index[cur_date];
             document.getElementById("conflist_area").innerHTML = '<div class="no_event">회의 없음</div>';
             for (var i = 1; i <= cur_Index; i++) {
-                str += '<div class="conf_list">';
-                for (var key in conf_list[cur_date][i]) {
-                    str += '<div>' + key + " : " + conf_list[cur_date][i][key] + '</div>';
-                }
-                str += '<input type="button" onclick="show_modimenu(' + i + ')" value = "수정하기" />' + '</div>';
-                str += '<input type="button" onclick="del_conf(' + i + ')" value = "삭제하기" />' + '</div>' + '<br />';
+                str += '<div class="del_button"><input type="button" class="btn-3 nav-btn" onclick="del_conf(' + i + ')" value="-" /></div>'
+                str += '<div class="conf_item" onclick="show_modimenu(' + i + ')">';
+                str += '<div class="title">' + conf_list[cur_date][i]["title"] + '</div>';
+                str += '<div class="subjectivity">' + conf_list[cur_date][i]["subjectivity"] + '</div>';
+                str += '<div class="when">' + conf_list[cur_date][i]["when"] + '</div>';
+                str += '<div class="sub_stuff">';
+                str += '<div class="receipt">접수자 ' + conf_list[cur_date][i]["receipt"] + '&nbsp;</div>';
+                str += '<div class="request">요청자 ' + conf_list[cur_date][i]["request"] + '&nbsp;</div>';
+                if (conf_list[cur_date][i][enroll]) str += '<div class="enroll">통합예약 체계 등록 여부 YES</div>';
+                else str += '<div class="enroll">통합예약 체계 등록 여부 NO</div>';
+                str += '</div>';
+                str += '<div class="where">장소 ' + conf_list[cur_date][i]["where"] + '</div>';
+                str += '<div class="document">문서 ' + conf_list[cur_date][i]["document"] + '</div>';
+                str += '<div class="attend">참석 ' + conf_list[cur_date][i]["attend"] + '</div>';
+                str += '<div class="content">내용<br>' + conf_list[cur_date][i]["content"] + '</div>';
+                str += '<div class="etc">기타 특이사항<br>' + conf_list[cur_date][i]["etc"] + '</div>';
+                str += '</div>';
             }
 
             if (str != " ")
@@ -601,25 +743,43 @@
 
         function show_modimenu(index) { // 회의 수정 창 열고 닫기
             if (page_flag == 0) {
+                var element = document.getElementById("conference_section");
                 modi_index = index;
                 var cur_Index = index;
                 var con = document.getElementById("modify").elements;
-                for (var i = 0; i < con.length; i++) {
+                for (var i = 0; i < 5; i++) {
                     con[i].value = conf_list[cur_date][cur_Index][con[i].id];
                 }
-                document.getElementById("update").style.display = "block";
+                for (var i = 5; i < 9; i++) {
+                    if (conf_list[cur_date][cur_Index]['where'] == con[i].value) {
+                        con[i].checked == true;
+                    }
+                }
+                for (var i = 9; i < con.length; i++) {
+                    con[i].value = conf_list[cur_date][cur_Index][con[i].id];
+                }
+                element.classList.add('modi');
                 page_flag = 1;
             }
             else {
                 modi_index = 0;
-                document.getElementById("update").style.display = "none";
+                var element = document.getElementById("conference_section");
+                element.classList.remove('modi');
                 page_flag = 0;
             }
         }
 
         function modi_conf(cur_Index) { //회의 수정하기
             var con = document.getElementById("modify").elements;
-            for (var i = 0; i < con.length; i++) {
+            for (var i = 0; i < 5; i++) {
+                conf_list[cur_date][cur_Index][con[i].id] = con[i].value;
+            }
+            for (var i = 5; i < 9; i++) {
+                if (con[i].checked == true) {
+                    conf_list[cur_date][cur_Index][con[i].id] = true;
+                }
+            }
+            for (var i = 9; i < con.length; i++) {
                 conf_list[cur_date][cur_Index][con[i].id] = con[i].value;
             }
             show_modimenu(0); // 회의 수정 창 닫기
@@ -648,8 +808,12 @@
             show_conf()
         }
 
-        function Turn_on(){
+        function ATurn_on() {
             document.getElementById("switch").classList.remove('off');
+        }
+
+        function CTurn_on() {
+            document.getElementById("switch2").classList.remove('off');
         }
 
         function checkOnlyOne(element) {
@@ -676,7 +840,8 @@
         <tr class="top-nav">
             <td>
                 <button style="padding: 0; text-align: center;" class="btn-3"
-                    onclick="prevCalendar()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button> </td> <td id="tbCalendarYM"
+                    onclick="prevCalendar()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button> </td> <td id="tbCalendarYM"
                         colspan="5" style="color: #f8352f; font-weight: 500; font-size: 65px;">
                         yyyy년 m월
             </td>
@@ -721,7 +886,8 @@
             <input type="button" class="btn-3 nav-btn" onclick="show_addmenu()" value="+" />
         </div>
         <div class="content-section" style="overflow: scroll;">
-            <div id="conflist_area"></div>
+            <div id="conflist_area">
+            </div>
         </div>
         <div class="create">
             <div class="create_nav">
@@ -736,7 +902,7 @@
                 </div>
             </div>
             <form id="add">
-                <input type="text" id="title" onchange="Turn_on()"  placeholder="회의 제목을 입력해주세요" value="" /><br />
+                <input type="text" id="title" onchange="ATurn_on()" placeholder="회의 제목을 입력해주세요" value="" /><br />
                 <div class="detail">
                     <label>일자 </label> <input type="text" id="when" placeholder="회의 일자를 입력해주세요" value="" />
                     <label>주관 </label> <input type="text" id="subjectivity" value="" />
@@ -744,12 +910,12 @@
                     <label>참석 </label> <input type="text" id="attend" value="" />
                     <label>요청 </label> <input type="text" id="request" value="" /><br />
                     <div class="check">
-                            <label>장소</label> 
-                            <input type='checkbox' id="where" value='vtc' onclick='checkOnlyOne(this)' />화상회의실
-                            <input type='checkbox' id='where' value='osc' onclick='checkOnlyOne(this)' />OSC
-                            <input type='checkbox' id='where' value='ccc' onclick='checkOnlyOne(this)' />CCC
-                            <label>&nbsp;통합예약 체계 등록 여부</label>
-                            <input type='checkbox' id='enroll' value=""/>
+                        <label>장소</label>
+                        <input type='checkbox' id="where" value='vtc' onclick='checkOnlyOne(this)' />화상회의실
+                        <input type='checkbox' id='where' value='osc' onclick='checkOnlyOne(this)' />OSC
+                        <input type='checkbox' id='where' value='ccc' onclick='checkOnlyOne(this)' />CCC
+                        <label>&nbsp;통합예약 체계 등록 여부</label>
+                        <input type='checkbox' id='enroll' value="" />
                     </div>
                     <label>문서 </label> <input type="text" id="document" value="" />
                     <label>접수자 </label> <input type="text" id="receipt" placeholder="일병 김태형" value="" /><br />
@@ -758,21 +924,41 @@
                 </div>
             </form>
         </div>
-    </div>
-
-    <div id="update" style="display: none; position: absolute; width: 100%; height: 100%; background-color:#3333FF">
-        <form id="modify">
-            <label>회의제목:</label> <input type="text" id="title" placeholder="회의 제목을 입력해주세요." value="" /><br />
-            <label>시간:</label> <input type="text" id="when" placeholder="회의 제목을 입력해주세요." value="" /><br />
-            <label>장소:</label> <input type="text" id="where" placeholder="회의 제목을 입력해주세요." value="" /><br />
-            <label>문서:</label> <input type="text" id="document" placeholder="회의 제목을 입력해주세요." value="" /><br />
-            <label>주관:</label> <input type="text" id="subjectivity" placeholder="회의 제목을 입력해주세요." value="" /><br />
-            <label>참석:</label> <input type="text" id="attend" placeholder="회의 제목을 입력해주세요." value="" /><br />
-            <label>요청:</label> <input type="text" id="request" placeholder="회의 제목을 입력해주세요." value="" /><br />
-            <label>접수자:</label> <input type="text" id="receipt" placeholder="회의 제목을 입력해주세요." value="" /><br />
-            <label>기타 특이사항:</label> <input type="text" id="ect" placeholder="회의 제목을 입력해주세요." value="" /><br />
-        </form>
-        <input id="modi" type="button" onclick="modi_conf(modi_index)" value="수정하기" />
+        <div class="update">
+            <div class="create_nav">
+                <div class="cancel" onclick="show_modimenu(modi_index)">
+                    취소
+                </div>
+                <div class="new_conf">
+                    회의 편집
+                </div>
+                <div id="switch2" class="add off" onclick="modi_conf(modi_index)">
+                    완료
+                </div>
+            </div>
+            <form id="modify">
+                <input type="text" id="title" onchange="CTurn_on()" placeholder="회의 제목을 입력해주세요" value="" /><br />
+                <div class="detail">
+                    <label>일자 </label> <input type="text" id="when" onchange="CTurn_on()" placeholder="회의 일자를 입력해주세요" value="" />
+                    <label>주관 </label> <input type="text" id="subjectivity" onchange="CTurn_on()" value="" />
+                    <br>
+                    <label>참석 </label> <input type="text" id="attend" onchange="CTurn_on()" value="" />
+                    <label>요청 </label> <input type="text" id="request" onchange="CTurn_on()" value="" /><br />
+                    <div class="check">
+                        <label>장소</label>
+                        <input type='checkbox' id="where" onchange="CTurn_on()" value='vtc' onclick='checkOnlyOne(this)' />화상회의실
+                        <input type='checkbox' id='where' onchange="CTurn_on()" value='osc' onclick='checkOnlyOne(this)' />OSC
+                        <input type='checkbox' id='where' onchange="CTurn_on()" value='ccc' onclick='checkOnlyOne(this)' />CCC
+                        <label>&nbsp;통합예약 체계 등록 여부</label>
+                        <input type='checkbox' id='enroll' onchange="CTurn_on()" value="" />
+                    </div>
+                    <label>문서 </label> <input type="text" id="document" onchange="CTurn_on()" value="" />
+                    <label>접수자 </label> <input type="text" id="receipt" onchange="CTurn_on()" placeholder="일병 김태형" value="" /><br />
+                    <label>내용 </label><br> <textarea id="content" onchange="CTurn_on()" rows="5" cols="33"> </textarea><br>
+                    <label>기타 특이사항</label><br> <textarea id="etc" onchange="CTurn_on()" rows="5" cols="33"> </textarea>
+                </div>
+            </form>
+        </div>
     </div>
     <script>
         window.onload(show_schedule(date.getDate()));
