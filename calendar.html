@@ -24,7 +24,7 @@
             border-bottom: 3px solid #d3d3d3;
         }
 
-        input{
+        input {
             font-size: 40px;
             text-align: center;
         }
@@ -35,7 +35,7 @@
             border-top-left-radius: 0.8em;
             border-top-right-radius: 0.8em;
             border-bottom: 1px solid #c4c2c2;
-            text-shadow: 0px-1px 1px rgba(0,0,0,0.3);
+            text-shadow: 0px-1px 1px rgba(0, 0, 0, 0.3);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), inset 0 1 2px rgba(0, 0, 0, 0.29);
             background-color: #efefef;
             margin: auto;
@@ -69,53 +69,221 @@
             position: absolute;
             max-width: 1386px;
             min-width: 1386px;
-            background: #fff;
+            width: 100%;
+            height: 100%;
+            background-color: #f8f8f8;
             transition: all 600ms cubic-bezier(0.86, 0, 0.07, 1);
             top: 100%;
             left: 50%;
             transform: translateX(-50%);
         }
 
+        .create_nav {
+            line-height: 1.5px;
+            background-color: #393939;
+            border-top-left-radius: 0.8em;
+            border-top-right-radius: 0.8em;
+            text-shadow: 0px-1px 1px rgba(0, 0, 0, 0.3);
+            border-top: 1px solid #3a3a3d;
+            border-bottom: 1px solid #171718;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), inset 0 1 2px rgba(0, 0, 0, 0.29);
+            display: flex;
+            justify-content: space-between;
+            margin: auto;
+            max-width: 1386px;
+            min-width: 1386px;
+            height: 80px;
+        }
+
+        .cancel {
+            color: #ff443a;
+            font-weight: 400;
+            font-size: 45px;
+            text-align: center;
+            margin: 0 5px;
+            line-height: 80px;
+            width: 10%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .cancel:hover {
+            color: #ffafaa;
+        }
+
+        .add {
+            color:#ff443a;
+            font-weight: 400;
+            font-size: 45px;
+            text-align: center;
+            margin: 0 5px;
+            line-height: 80px;
+            width: 10%;
+            height: 100%;
+            cursor: pointer;
+            
+        }
+
+        .add.off{
+            color:#a8a8a8;
+            pointer-events: none;
+        }
+
+        .add:hover {
+            color: #ffafaa;
+        }
+
+        .new_conf {
+            color: #e4e4e4;
+            font-weight: 400;
+            font-size: 45px;
+            text-align: center;
+            margin: 0 5px;
+            line-height: 80px;
+            width: 30%;
+            height: 100%;
+        }
+
+
+
         .conference_section.show .create {
             top: 0%;
         }
 
-        .deco_circle{
+        .button_group {
+            width: 8%;
+            margin: 10px;
+        }
+
+        #cur_date_area {
+            color: #e4e4e4;
+            font-weight: 400;
+            font-size: 40px;
+            text-align: center;
+            margin: auto;
+            width: 70%;
+        }
+
+        .nav-btn {
+            padding: 0 12px;
+            margin: auto 4px;
+            font-weight: 100;
+            line-height: 10px;
+            color: #e4e4e4;
+            background-color: #686868;
+            height: 85%;
+            border: #525151 1px;
+        }
+
+        .nav-btn:hover {
+            color: #ff453a;
+        }
+
+        .no_event {
+            color: #a8a8a8;
+            line-height: 1000px;
+            text-align: center;
+            height: 1000px;
+        }
+
+        .deco_circle {
             margin: 3px;
             padding: 0.3em;
             border-color: #000;
+            border: 0px;
             border-radius: 50%;
             text-align: center;
-            width:  25px;
+            width: 25px;
             height: 25px;
-            
+
         }
 
-        .deco_circle.red{
+        .deco_circle.red {
             background-color: #ff453a;
         }
-        
-        .deco_circle.yellow{
+
+        .deco_circle.yellow {
             background-color: #ff9500;
         }
 
-        .deco_circle.green{
+        .deco_circle.green {
             background-color: #28cd41;
         }
 
         .nav-bar {
             line-height: 1.5px;
-            background-color: #c2c0c0;
-            text-shadow: 0px-1px 1px rgba(0,0,0,0.3);
-            border-top: 1px solid #aba9a9; 
+            background-color: #393939;
+            text-shadow: 0px-1px 1px rgba(0, 0, 0, 0.3);
+            border-top: 1px solid #aba9a9;
             border-bottom: 1px solid #858585;
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 2px rgba(255, 255, 255, 0.3), inset 0 1 2px rgba(0, 0, 0, 0.29);
             display: flex;
-            /* flex-direction: row-reverse; */
+            justify-content: space-between;
             margin: auto;
             max-width: 1386px;
             min-width: 1386px;
             height: 55px;
+        }
+
+        #title {
+            text-align: left;
+            font-size: 40px;
+            margin: 20px 10px;
+            width: 98%;
+            height: 80px;
+            border: 3px solid #ccd1ff;
+        }
+
+
+        .detail {
+            font-size: 45px;
+        }
+
+        .detail label {
+            margin: 0 0 0 10px;
+            color: #fd2015;
+            font-weight:500;
+        }
+
+        .detail input {
+            margin: 0 0 10px 0;
+            text-align: left;
+            border: 3px solid #ccd1ff;
+            width: 41%;
+            height: 50px;
+        }
+
+        .detail #receipt{
+            width: 38%;
+        }
+       
+
+        .check {
+            font-size: 40px;
+        }
+
+        .check label{
+            font-size: 45px;
+            margin: 0 0 0 10px;
+        }
+        .check input{
+            width: 5%;
+            height: 40px;
+            line-height: 65px;
+        }
+
+        textarea{
+            width: 98%;
+            height: 300px;
+            margin: 0 10px 0 10px;
+            resize: none;
+            overflow: scroll;
+            font-size: 30px;
+            border: 3px solid #ccd1ff;
+        }
+
+        #etc{
+            height: 200px;
         }
 
         button,
@@ -376,7 +544,7 @@
             var year = parseInt(cur_ym / 100);
             var month = cur_ym % 100;
             var day = cur_date - (cur_ym * 100);
-            document.getElementById("cur_date_area").innerHTML = year + "년" + month + "월" + day + "일 회의록";
+            document.getElementById("cur_date_area").innerHTML = year + "년 " + month + "월 " + day + "일 회의록&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;";
         }
 
         function show_addmenu() { // 회의 작성 창 열고 닫기
@@ -396,8 +564,18 @@
             Index[cur_date] += 1;
             var cur_Index = Index[cur_date];
             var con = document.getElementById("add").elements;
+            var place = document.getElementsByName("where");
             conf_list[cur_date][cur_Index] = new Object();
-            for (var i = 0; i < con.length; i++) {
+            for (var i = 0; i < 5; i++) {
+                conf_list[cur_date][cur_Index][con[i].id] = con[i].value;
+            }
+            for(var i= 5; i< 9; i++){
+               alert(con[i].checked)
+                if(con[i].checked== true){
+                    conf_list[cur_date][cur_Index][con[i].id] = con[i].value;
+                }
+            }
+            for(var i= 9; i< con.length; i++){
                 conf_list[cur_date][cur_Index][con[i].id] = con[i].value;
             }
             show_addmenu(); // 회의 작성 창 닫기
@@ -407,7 +585,7 @@
         function show_conf() { //현재 날짜 회의록 출력
             let str = " ";
             var cur_Index = Index[cur_date];
-            document.getElementById("conflist_area").innerHTML = "회의가 없습니다.";
+            document.getElementById("conflist_area").innerHTML = '<div class="no_event">회의 없음</div>';
             for (var i = 1; i <= cur_Index; i++) {
                 str += '<div class="conf_list">';
                 for (var key in conf_list[cur_date][i]) {
@@ -470,8 +648,25 @@
             show_conf()
         }
 
+        function Turn_on(){
+            document.getElementById("switch").classList.remove('off');
+        }
+
+        function checkOnlyOne(element) {
+
+            const checkboxes
+                = document.getElementsByName("where");
+
+            checkboxes.forEach((cb) => {
+                cb.checked = false;
+            })
+
+            element.checked = true;
+        }
+
 
     </script>
+
 
 
 </head>
@@ -481,20 +676,13 @@
         <tr class="top-nav">
             <td>
                 <button style="padding: 0; text-align: center;" class="btn-3"
-                    onclick="prevCalendar()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<</button>
-                        </td> <td id="tbCalendarYM" colspan="2"
-                        style="color: #f8352f; font-weight: 500; font-size: 40px;">
+                    onclick="prevCalendar()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button> </td> <td id="tbCalendarYM"
+                        colspan="5" style="color: #f8352f; font-weight: 500; font-size: 65px;">
                         yyyy년 m월
             </td>
             <td>
                 <button style="padding: 0;" class="btn-3"
-                    onclick="nextCalendar()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;></button>
-            </td>
-            <td></td>
-            <td></td>
-            <td>
-                <button style="padding: 0; font-weight:1000;" class="btn-3"
-                    onclick="show_addmenu()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                    onclick="nextCalendar()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
             </td>
         </tr>
         <tr style="background-color: #f9f9f9; color: #000;">
@@ -524,37 +712,51 @@
     </script>
     <div id="conference_section" class="conference_section">
         <div class="nav-bar">
-            <tr>
-                <td>
-                    <input type="button"class="deco_circle red">
-                    <input type="button"class="deco_circle yellow">
-                    <input type="button"class="deco_circle green">
-                </td>
-                <td colspan="4">
-                    <input type="text">
-                </td>
-                <td>
-                        <input type="button" style="margin: auto 4px; font-weight:100; width: 50px; line-height: 10px; color: #ff3f41" class="btn-3" onclick="show_addmenu()" value="+"/>
-                </td>
-            </tr>
+            <div class="button_group">
+                <input type="button" class="deco_circle red">
+                <input type="button" class="deco_circle yellow">
+                <input type="button" class="deco_circle green">
+            </div>
+            <div id="cur_date_area"></div>
+            <input type="button" class="btn-3 nav-btn" onclick="show_addmenu()" value="+" />
         </div>
         <div class="content-section" style="overflow: scroll;">
-            <div id="cur_date_area"></div>
             <div id="conflist_area"></div>
         </div>
-        <div class="create" style="width:100%; height:100%; background-color: #2ecc71">
+        <div class="create">
+            <div class="create_nav">
+                <div class="cancel" onclick="show_addmenu()">
+                    취소
+                </div>
+                <div class="new_conf">
+                    새로운 회의
+                </div>
+                <div id="switch" class="add off" onclick="add_conf()">
+                    추가
+                </div>
+            </div>
             <form id="add">
-                <label>회의제목:</label> <input type="text" id="title" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>시간:</label> <input type="text" id="when" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>장소:</label> <input type="text" id="where" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>문서:</label> <input type="text" id="document" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>주관:</label> <input type="text" id="subjectivity" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>참석:</label> <input type="text" id="attend" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>요청:</label> <input type="text" id="request" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>접수자:</label> <input type="text" id="receipt" placeholder="회의 제목을 입력해주세요." value="" /><br />
-                <label>기타 특이사항:</label> <input type="text" id="ect" placeholder="회의 제목을 입력해주세요." value="" /><br />
+                <input type="text" id="title" onchange="Turn_on()"  placeholder="회의 제목을 입력해주세요" value="" /><br />
+                <div class="detail">
+                    <label>일자 </label> <input type="text" id="when" placeholder="회의 일자를 입력해주세요" value="" />
+                    <label>주관 </label> <input type="text" id="subjectivity" value="" />
+                    <br>
+                    <label>참석 </label> <input type="text" id="attend" value="" />
+                    <label>요청 </label> <input type="text" id="request" value="" /><br />
+                    <div class="check">
+                            <label>장소</label> 
+                            <input type='checkbox' id="where" value='vtc' onclick='checkOnlyOne(this)' />화상회의실
+                            <input type='checkbox' id='where' value='osc' onclick='checkOnlyOne(this)' />OSC
+                            <input type='checkbox' id='where' value='ccc' onclick='checkOnlyOne(this)' />CCC
+                            <label>&nbsp;통합예약 체계 등록 여부</label>
+                            <input type='checkbox' id='enroll' value=""/>
+                    </div>
+                    <label>문서 </label> <input type="text" id="document" value="" />
+                    <label>접수자 </label> <input type="text" id="receipt" placeholder="일병 김태형" value="" /><br />
+                    <label>내용 </label><br> <textarea id="content" rows="5" cols="33"> </textarea><br>
+                    <label>기타 특이사항</label><br> <textarea id="etc" rows="5" cols="33"> </textarea>
+                </div>
             </form>
-            <input type="button" onclick="add_conf();" value="작성하기" />
         </div>
     </div>
 
