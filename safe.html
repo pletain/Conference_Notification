@@ -13,7 +13,7 @@
             height: 50px;
             text-align: center;
             font-size: 20px;
-            font-family: 굴림;
+            font-family: 나눔고딕;
             border: 2px;
             border-color: #3333FF;
             border-radius: 8px;
@@ -772,8 +772,9 @@
         }
 
         function del_conf(index) { // 회의 삭제
-            alert("정말 삭제하시겠습니까? 담당관님의 등짝 스매싱을 맞을 수 있습니다!!");
-            if (index == Index[cur_date]) {
+            if(confirm("정말 삭제하시겠습니까?") == true){
+                alert("삭제됐습니다.");
+                if (index == Index[cur_date]) {
                 Index[cur_date] = Index[cur_date] - 1;
             }
             else {
@@ -791,7 +792,11 @@
 
                 Index[cur_date] -= 1;
             }
-            show_conf()
+            show_conf();
+            }
+            else{
+                return ;
+            }
         }
 
         function ATurn_on() {
